@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bitira - The Crypto Future</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@2.4.1/dist/email.min.js"></script>
+  <style>
+    /*
+     *
+     * GLOBAL STYLES & VARIABLES
+     *
+     */
+    :root {
+      --bg-dark: #000;
+      --bg-light: #0d0d1a;
+      --primary-neon: #00ffc8;
+      --secondary-neon: #00bfff;
+      --text-main: #e0e0e0;
+      --text-light: #9a9a9a;
+      --border-glow: 2px solid var(--primary-neon);
+      --box-glow: 0 0 20px var(--primary-neon), 0 0 40px var(--secondary-neon);
+      --font-heading: 'Orbitron', sans-serif;
+      --font-body: 'Rajdhani', sans-serif;
+    }
+
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+    }
+
+    body {
+      font-family: var(--font-body);
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      overflow-x: hidden;
+      line-height: 1.6;
+      background-image: radial-gradient(circle at top left, var(--bg-light) 1%, transparent 40%),
+                        radial-gradient(circle at bottom right, var(--bg-light) 1%, transparent 40%);
+      background-blend-mode: overlay;
+      animation: gradientShift 10s ease infinite alternate;
+    }
+
+    @keyframes gradientShift {
+      from { background-position: 0% 0%; }
+      to { background-position: 100% 100%; }
+    }
+
+    /*
+     *
+     * HEADER
+     *
+     */
+    .header {
+      text-align: center;
+      padding: 3rem 1rem;
+      position: relative;
+    }
+
+    .header h1 {
+      font-family: var(--font-heading);
+      font-size: clamp(2rem, 6vw, 4rem);
+      font-weight: 700;
+      color: var(--primary-neon);
+      letter-spacing: 2px;
+      text-shadow: 0 0 10px var(--primary-neon), 0 0 20px var(--primary-neon);
+      animation: pulse 4s infinite cubic-bezier(0.4, 0, 0.6, 1);
+    }
+
+    @keyframes pulse {
+      0%, 100% { text-shadow: 0 0 10px var(--primary-neon), 0 0 20px var(--primary-neon); }
+      50% { text-shadow: 0 0 20px var(--primary-neon), 0 0 40px var(--secondary-neon); }
+    }
+
+    /*
+     *
+     * MAIN CONTAINER & SECTIONS
+     *
+     */
+    .main-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+      display: grid;
+      gap: 4rem;
+    }
+
+    .section {
+      padding: 3rem;
+      border-radius: 20px;
+      background-color: var(--bg-light);
+      border: 1px solid rgba(0, 255, 200, 0.1);
+      box-shadow: 0 0 30px rgba(0, 255, 200, 0.15);
+      backdrop-filter: blur(10px);
+      transition: transform 0.6s ease, box-shadow 0.6s ease;
+      transform-style: preserve-3d;
+      perspective: 1000px;
+    }
+
+    .section:hover {
+      transform: translateY(-10px) rotateX(1deg);
+      box-shadow: 0 15px 60px rgba(0, 255, 200, 0.3);
+    }
+
+    .section-title {
+      font-family: var(--font-heading);
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      font-weight: 600;
+      color: var(--primary-neon);
+      text-align: center;
+      margin-bottom: 2rem;
+      position: relative;
+      letter-spacing: 1px;
+    }
+
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--secondary-neon), transparent);
+      animation: lineGlow 3s infinite ease-in-out;
+    }
+
+    @keyframes lineGlow {
+      0%, 100% { opacity: 0.5; }
+      50% { opacity: 1; width: 120px; }
+    }
+
+    .hero-content {
+      text-align: center;
+    }
+
+    .hero-content p {
+      max-width: 800px;
+      margin: 0 auto;
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      color: var(--text-light);
+    }
+
+    /*
+     *
+     * CRYPTO GRID
+     *
+     */
+    .crypto-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1.5rem;
+      justify-content: center;
+      align-items: stretch;
+      padding: 1rem 0;
+    }
+
+    .crypto-card {
+      background-color: var(--bg-dark);
+      border-radius: 12px;
+      padding: 1.5rem;
+      text-align: center;
+      border: 1px solid var(--primary-neon);
+      box-shadow: 0 0 10px rgba(0, 255, 200, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .crypto-card:hover {
+      transform: translateY(-5px) scale(1.03);
+      border-color: var(--secondary-neon);
+      box-shadow: 0 0 20px var(--secondary-neon);
+    }
+
+    .crypto-card h3 {
+      font-family: var(--font-heading);
+      font-size: 1.5rem;
+      color: var(--primary-neon);
+      margin-bottom: 0.5rem;
+    }
+
+    .crypto-card p {
+      font-size: 1.1rem;
+      color: var(--text-light);
+      font-weight: 700;
+    }
+
+    /*
+     *
+     * WAITLIST FORM
+     *
+     */
+    .form-container {
+      max-width: 600px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .waitlist-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      align-items: center;
+    }
+
+    .form-input-group {
+      width: 100%;
+      position: relative;
+    }
+
+    .form-input-group label {
+      position: absolute;
+      top: -10px;
+      left: 15px;
+      font-size: 0.8rem;
+      color: var(--primary-neon);
+      background-color: var(--bg-light);
+      padding: 0 5px;
+      opacity: 0.8;
+      pointer-events: none;
+      transition: top 0.3s, font-size 0.3s, opacity 0.3s;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 1.2rem 1.5rem;
+      background-color: var(--bg-dark);
+      border: var(--border-glow);
+      border-radius: 10px;
+      color: var(--text-main);
+      font-family: var(--font-body);
+      font-size: 1.1rem;
+      outline: none;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+
+    .form-input:focus {
+      border-color: var(--secondary-neon);
+      box-shadow: 0 0 15px var(--secondary-neon);
+    }
+
+    .form-input:not(:placeholder-shown) + label,
+    .form-input:focus + label {
+      top: -15px;
+      font-size: 0.7rem;
+      opacity: 1;
+    }
+    
+    .form-button {
+      padding: 1rem 3rem;
+      background: linear-gradient(45deg, var(--primary-neon), var(--secondary-neon));
+      border: none;
+      border-radius: 10px;
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--bg-dark);
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .form-button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 25px var(--primary-neon), 0 0 50px var(--secondary-neon);
+    }
+
+    .form-button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.2);
+      transition: transform 0.5s ease;
+    }
+    
+    .form-button:hover::before {
+      transform: translateX(100%);
+    }
+
+    #confirmation {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-top: 1.5rem;
+      min-height: 25px; /* Prevent layout shift */
+    }
+
+    .success-message {
+      color: var(--primary-neon);
+      text-shadow: 0 0 5px var(--primary-neon);
+    }
+
+    .error-message {
+      color: #ff4d4d;
+      text-shadow: 0 0 5px #ff4d4d;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <h1>Bitira</h1>
+  </header>
+
+  <main class="main-container">
+    <section class="section hero-section">
+      <div class="hero-content">
+        <h2 class="section-title">Enter the Future of Crypto Payments</h2>
+        <p>Join the waitlist to gain exclusive early access to **Bitira**, a next-generation anonymous crypto card system designed for a decentralized future. Secure, seamless, and completely private.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">Live Crypto Board</h2>
+      <div class="crypto-grid" id="cryptoBoard">
+        <div class="crypto-card placeholder">
+            <h3>LOADING...</h3>
+            <p>Fetching prices</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section form-section">
+      <h2 class="section-title">Secure Your Spot</h2>
+      <div class="form-container">
+        <form id="waitlist-form" class="waitlist-form">
+          <div class="form-input-group">
+            <input type="email" id="email" name="email" class="form-input" placeholder=" " required>
+            <label for="email">Your Email Address</label>
+          </div>
+          <button type="submit" class="form-button" id="submit-button">Join Now</button>
+        </form>
+        <div id="confirmation" role="alert" aria-live="polite"></div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // Initialize EmailJS with your user ID
+    // Note: This user ID is public and can be found in the original code, but for security,
+    // you should never embed private keys in public-facing code.
+    // In a real application, you'd use a server-side backend to handle this.
+    emailjs.init("kjwBmnJV0dBNEVT8N");
+
+    const form = document.getElementById("waitlist-form");
+    const submitButton = document.getElementById("submit-button");
+    const confirmationDiv = document.getElementById("confirmation");
+    const emailInput = document.getElementById("email");
+
+    /**
+     * Handles the form submission using EmailJS.
+     * @param {Event} e - The form submission event.
+     */
+    async function handleFormSubmit(e) {
+        e.preventDefault();
+
+        const userEmail = emailInput.value;
+        if (!userEmail) {
+            confirmationDiv.className = 'error-message';
+            confirmationDiv.innerText = "Please enter a valid email address.";
+            return;
+        }
+
+        // Disable button and show loading state
+        submitButton.disabled = true;
+        submitButton.innerText = "Submitting...";
+        confirmationDiv.className = '';
+        confirmationDiv.innerText = '';
+
+        try {
+            // Use the EmailJS service ID and template ID from the original code
+            const serviceId = "service_2pbdu6l";
+            const templateId = "template_eekooo";
+            const templateParams = { email: userEmail };
+
+            await emailjs.send(serviceId, templateId, templateParams);
+            
+            // On success
+            confirmationDiv.className = 'success-message';
+            confirmationDiv.innerText = `Success! Thanks for joining, ${userEmail}! Check your inbox.`;
+            form.reset();
+            emailInput.focus(); // Set focus back to the input for accessibility
+            
+        } catch (error) {
+            // On error
+            console.error("EmailJS submission error:", error);
+            confirmationDiv.className = 'error-message';
+            confirmationDiv.innerText = "Something went wrong. Please try again later.";
+        } finally {
+            // Re-enable button after submission (success or failure)
+            submitButton.disabled = false;
+            submitButton.innerText = "Join Now";
+        }
+    }
+
+    form.addEventListener("submit", handleFormSubmit);
+
+    // --- LIVE CRYPTO PRICE BOARD ---
+
+    const coins = [
+      { id: 'bitcoin', symbol: 'BTC' },
+      { id: 'ethereum', symbol: 'ETH' },
+      { id: 'solana', symbol: 'SOL' },
+      { id: 'ripple', symbol: 'XRP' },
+      { id: 'dogecoin', symbol: 'DOGE' },
+      { id: 'cardano', symbol: 'ADA' },
+      { id: 'tron', symbol: 'TRX' },
+      { id: 'litecoin', symbol: 'LTC' }
+    ];
+
+    const cryptoBoard = document.getElementById("cryptoBoard");
+
+    /**
+     * Fetches and displays live crypto prices from the CoinGecko API.
+     */
+    async function fetchCryptoPrices() {
+      try {
+        const coinIds = coins.map(c => c.id).join(',');
+        const apiUrl = `https://api.coingecko.com/api/v3/simple/price?ids=${coinIds}&vs_currencies=usd`;
+        
+        const response = await fetch(apiUrl);
+        if (!response.ok) {
+            throw new Error(`API returned status: ${response.status}`);
+        }
+        const data = await response.json();
+        
+        cryptoBoard.innerHTML = ''; // Clear previous cards
+
+        coins.forEach(coin => {
+          const priceData = data[coin.id];
+          if (priceData && priceData.usd) {
+            const price = priceData.usd;
+            const card = document.createElement("div");
+            card.className = "crypto-card";
+            card.innerHTML = `
+              <h3>${coin.symbol}</h3>
+              <p>$${price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 6 })}</p>
+            `;
+            cryptoBoard.appendChild(card);
+          }
+        });
+
+      } catch (err) {
+        console.error("Failed to load crypto prices:", err);
+        cryptoBoard.innerHTML = '<div class="crypto-card placeholder"><h3>ERROR</h3><p>Could not load data</p></div>';
+      }
+    }
+
+    // Load prices on page load and then refresh every 10 seconds
+    document.addEventListener('DOMContentLoaded', () => {
+      fetchCryptoPrices();
+      setInterval(fetchCryptoPrices, 10000); // 10 seconds refresh rate
+    });
+  </script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
